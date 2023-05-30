@@ -3,6 +3,7 @@ def result(txt):
     print('PLACAR'.center(16))
     print('--' * len(txt))
 
+from time import sleep
 
 questoes = ('Em que ano vocês se conheceram ?',
             'Juntos há quanto tempo ?',
@@ -33,25 +34,31 @@ num_questoes = 0
 
 for q in questoes:
     print('-' * (len(q)))
-    print(q)
+    print(f'{num_questoes + 1}) {q}')
+    sleep(2.5)
     for a in alternativas[num_questoes]:
         print(a)
-    resp = str(input('Digite a resposta correta: ')).upper()
+        sleep(0.5)
     print('Você tem 2 tentativas para acertar!')
-    respostas.append(resp)
+    sleep(0.2)
+    resp = str(input('Digite sua resposta: ')).upper()
+
     if resp == respostas_certas[num_questoes]:
+        respostas.append(resp)
         pontuacao += 1
-        print('Resposta CORRETA!')
+        print('Resposta \033[1;32mCORRETA!\033[m')
     else:
-        print('Resposta INCORRETA. Você tem mais uma tentativa.')
-        resp = str(input('Digite a resposta correta: ')).upper()
+        print('Resposta \033[1;31mINCORRETA.\033[m Você tem mais uma tentativa.')
+        resp = str(input('Digite sua resposta: ')).upper()
         respostas1.append(resp)
         if resp == respostas_certas[num_questoes]:
             pontuacao += 1
-            print('Resposta CORRETA!')
+            print('Resposta \033[1;31mCORRETA!\033[m')
         else:
-            print(f'Resposta INCORRETA NOVAMENTE. A resposta certa seria {respostas_certas[num_questoes]}')
-
+            print(f'Resposta \033[1;31mINCORRETA NOVAMENTE.\033[m A resposta certa seria a alternativa \033[1;34m{respostas_certas[num_questoes]}\033[m')
+    if not resp:
+        continue
+    
     num_questoes += 1
 
 result('resultado')
@@ -69,7 +76,6 @@ for r in respostas1:
 
 print()
 pontuacao = pontuacao/len(questoes) * 100
-print(f'Sua pontuação final foi de {pontuacao}%')
-
+print(f'Sua pontuação final foi de \033[4;33m{pontuacao}\033[m pontos.')
 
     
