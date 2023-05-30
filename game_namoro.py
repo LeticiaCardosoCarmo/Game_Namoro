@@ -3,7 +3,7 @@ def result(txt):
     print('PLACAR'.center(16))
     print('--' * len(txt))
 
-from time import sleep
+import time
 
 questoes = ('Em que ano vocês se conheceram ?',
             'Juntos há quanto tempo ?',
@@ -31,18 +31,24 @@ respostas = []
 respostas1 = []
 pontuacao = 0
 num_questoes = 0
+inicio = time.time()
 
 for q in questoes:
     print('-' * (len(q)))
     print(f'{num_questoes + 1}) {q}')
-    sleep(2.5)
+    time.sleep(2)
     for a in alternativas[num_questoes]:
         print(a)
-        sleep(0.5)
-    print('Você tem 2 tentativas para acertar!')
-    sleep(0.2)
+        time.sleep(0.5)
+    print('Você tem 2 tentativas para acertar! Cada pergunta vale 10 pontos.')
+    time.sleep(0.2)
     resp = str(input('Digite sua resposta: ')).upper()
-
+    '''inicio = time.time()
+    fim = time.time()
+    while fim - inicio  > 1 and not resp:
+        print('Seu tempo acabou!')
+        continue'''
+    
     if resp == respostas_certas[num_questoes]:
         respostas.append(resp)
         pontuacao += 1
@@ -56,10 +62,10 @@ for q in questoes:
             print('Resposta \033[1;31mCORRETA!\033[m')
         else:
             print(f'Resposta \033[1;31mINCORRETA NOVAMENTE.\033[m A resposta certa seria a alternativa \033[1;34m{respostas_certas[num_questoes]}\033[m')
-    if not resp:
-        continue
-    
+ 
     num_questoes += 1
+fim = time.time()
+temp = fim - inicio
 
 result('resultado')
 print('Respostas Certas: ', end='')
@@ -76,6 +82,5 @@ for r in respostas1:
 
 print()
 pontuacao = pontuacao/len(questoes) * 100
-print(f'Sua pontuação final foi de \033[4;33m{pontuacao}\033[m pontos.')
+print('Sua pontuação final foi de \033[4;33m{:.1f}\033[m pontos e você levou \033[4;33m{:.1f}\033[m segundos para terminar o quiz de namoro.'.format(pontuacao,temp))
 
-    
